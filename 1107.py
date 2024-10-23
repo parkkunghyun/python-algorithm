@@ -1,24 +1,71 @@
 """
-0-9 + -
-0 -눌러도 안됨
-채널은 무한대
-N
-버튼을 최소 몇번 눌러야하는지
-100번이 디폴트
+100부터 시작으로일단하고
+100이 아니면
+    아웃된곳이 아니면서 현재 값이 더 작다 그리면 +하고 넘기기
+    아웃된곳이 아니면서 현재 값이 더 크다 그러면 -하고 넘기기
 
-N 100
-5455++
-100
-500000
-455555
-+1
-0 +
+시작을 최대한 근처에서 시작하고 싶다
+    한자리씩 보기 -> 그래서 현재 자리가 아웃이 아니다 그러면 그자리 채우기
+    그리고 아웃이다 그러면 그 근처 돌기 가장 준거 큰거?
 
-재귀로 풀어야할듯? -> 근데 잘못해서 무한 루프 들어가면?
-1. 일단 바로 갈 수 있는지 확인
-2. 그 다음 가장 가까이 접근 -> 더 높기 / 더 낮게
-3. 그리고 계속 접근하기
-4. 그리고 가장 작은거 나오면 끝 -> 즉 전보다 더 값이 커지면 그만 계산
-무한르프 안빠지게!
 """
 
+import sys
+from collections import deque
+
+input = sys.stdin.readline
+
+N = input()
+M = int(input())
+num = [0 for _ in range(10)]
+
+if M != 0:
+    mList = list(map(int, input().split()))
+    for ml in mList:
+        num[ml] = -1
+
+#print(f'num -> {num}')
+
+def bfs(curr, ):
+    que = deque()
+
+if int(N) == 100:
+    print(0)
+else:
+    # 일단 시작 위치 찾기
+    current = ""
+    temp = N
+    N = list(N.rstrip())
+    for nl in N:
+        #print(f'nl -> {nl}')
+        if num[int(nl)] != -1:
+            current += nl
+        else:
+            #print("check")
+            # 가장 큰값 8,9
+            max_n = 99999 
+            for i in range(int(nl), 10):
+                if num[i] != -1:
+                    max_n = i
+                    break
+            # 가장 작은값
+            min_n = -99999
+            for i in range(int(nl), -1, -1):
+                if num[i] != -1:
+                    min_n = i
+                    break
+
+            print(f'max- {max_n} min- {min_n}') #
+
+            if int(nl)-min_n < max_n - int(nl):
+                current += str(min_n)
+            else:
+                current += str(max_n)
+    print(f'current -> {current}')
+    res = len(N)
+    print(f'res -> {res}') # 일단 개수만큼을 더함
+    # 이제부터는 + -로 움직이면 됨! 
+    # 즉 차이만큼 빼주면 된다!!
+    current = int(current)
+    #print(abs(int(temp) - current))
+    print(res+abs(int(temp) - current) )
