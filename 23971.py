@@ -1,20 +1,19 @@
-"""
-10000 - WEAK
-100000 - NORMAL
-STRONG
+""" 
+w h
 
-+ - 해주면 될듯?
-
+N M
+5 4 1 1
+처음부터 그만큼씩 
 """
 
 import sys
+import math
 
 input = sys.stdin.readline
 
-N,M = map(int, input().split(" "))
+H,W,N,M = map(int, input().split(" "))
 
+a = math.ceil(H / (N+1))
+b = math.ceil(W / (M+1))
+print(a*b)
 
-for _ in range(N):
-    combat, power = input().strip().split(" ")
-    power = int(power)
-    cp[power] = combat
