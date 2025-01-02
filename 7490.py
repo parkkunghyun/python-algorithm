@@ -3,28 +3,27 @@
 """
 
 import sys
-from collections import deque
 
-def dfs(n, idx, rst):
-    #print(f'idx -> {idx}')
+input = sys.stdin.readline 
+
+def dfs(result, idx, n): # "1", 1, 3
     if idx == n:
-        ans = eval(rst.replace(' ', ''))
-        if ans == 0:
-            arr.append(rst)
-    else:
-        n_idx = idx + 1
-        dfs(n, n_idx, rst + ' ' + str(n_idx))
-        dfs(n, n_idx, rst + '+' + str(n_idx))
-        dfs(n, n_idx, rst + '-' + str(n_idx))
-
-input = sys.stdin.readline
+        if eval(result.replace(" ", "")) == 0:
+            results.append(result)
+        return
+    empty = result + " " + str(idx + 1)
+    plus = result + "+" + str(idx + 1)
+    minus = result + "-" + str(idx + 1)
+    dfs(empty, idx+1, n)
+    dfs(plus, idx+1, n)
+    dfs(minus, idx+1, n)
 
 T = int(input())
 
 for _ in range(T):
-    N = int(input())
-    arr = []
-    dfs(N, 1, '1')
-    for a in arr:
-        print(a)
+    n = int(input())
+    results = []
+    dfs("1", 1, n)
+    for result in results:
+        print(result)
     print()
